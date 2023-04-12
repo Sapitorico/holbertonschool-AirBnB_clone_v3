@@ -25,15 +25,14 @@ class FileStorage:
     __objects = {}
 
     def all(self, cls=None):
-        """Returns a dictionary of models currently in storage"""
-        if cls is None:
-            return self.__objects
-        else:
-            objects_list = {}
+        """returns the dictionary __objects"""
+        if cls is not None:
+            new_dict = {}
             for key, value in self.__objects.items():
-                if isinstance(value, cls):
-                    objects_list[key] = value
-            return objects_list
+                if cls == value.__class__ or cls == value.__class__.__name__:
+                    new_dict[key] = value
+            return new_dict
+        return self.__objects
 
     def new(self, obj):
         """sets in __objects the obj with key <obj class name>.id"""
@@ -71,13 +70,14 @@ class FileStorage:
         self.reload()
 
     def get(self, cls, id):
-        """retrieve an object"""
+        """retrieve an object specified"""
         for objects in self.all(cls).values():
             if objects.id == id:
                 return objects
         return None
 
     def count(self, cls=None):
+        """returns the number of saved objects"""
         if cls is None:
             return len(self.all())
         else:
