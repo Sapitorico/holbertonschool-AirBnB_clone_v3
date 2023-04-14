@@ -24,4 +24,4 @@ def close_storage(exception):
 
 if __name__ == '__main__':
     """run my app"""
-    app.run(host=host, port=port, threaded=True)
+    app.run(host=host, port=port)
