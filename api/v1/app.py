@@ -10,7 +10,7 @@ from os import getenv
 app = Flask(__name__)
 """register blueprint template in my appi"""
 app.register_blueprint(app_views)
-CORS(app, resources={r"/*": {"origins": "*"}})
+# CORS(app, resources={r"/*": {"origins": "*"}})
 
 
 
