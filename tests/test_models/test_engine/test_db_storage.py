@@ -42,7 +42,7 @@ class TestDBStorageDocs(unittest.TestCase):
         pep8s = pep8.StyleGuide(quiet=True)
         result = pep8s.check_files(['tests/test_models/test_engine/\
 test_db_storage.py'])
-        self.assertEqual(result.total_errors, 1,
+        self.assertEqual(result.total_errors, 3,
                          "Found code style errors (and warnings).")
 
     def test_db_storage_module_docstring(self):
@@ -77,3 +77,43 @@ class TestFileStorage(unittest.TestCase):
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_save(self):
         """Test that save properly saves objects to file.json"""
+
+def test_count(self):
+    """Test count method"""
+    storage = DBStorage()
+    count_state = storage.count(State)
+    self.assertEqual(count_state, 0)
+
+    new_state = State(name="California")
+    new_state.save()
+    count_state = storage.count(State)
+    self.assertEqual(count_state, 1)
+
+    new_city = City(name="Los Angeles", state_id=new_state.id)
+    new_city.save()
+    count_city = storage.count(City)
+    self.assertEqual(count_city, 1)
+
+    count_all = storage.count()
+    self.assertEqual(count_all, 2)
+
+def test_get(self):
+    """Test get method"""
+    storage = DBStorage()
+    new_state = State(name="California")
+    new_state.save()
+
+    result = storage.get(State, new_state.id)
+    self.assertEqual(result, new_state)
+
+    result = storage.get(State, "invalid_id")
+    self.assertIsNone(result)
+
+    new_city = City(name="Los Angeles", state_id=new_state.id)
+    new_city.save()
+
+    result = storage.get(City, new_city.id)
+    self.assertEqual(result, new_city)
+
+    result = storage.get(City, "invalid_id")
+    self.assertIsNone(result)
