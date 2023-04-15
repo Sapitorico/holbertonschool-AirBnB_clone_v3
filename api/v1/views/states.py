@@ -16,6 +16,7 @@ from flask import jsonify, make_response, request
 #     else:
 #         return jsonify([])
 
+@app_views.route('/states', methods=['GET'])
 @app_views.route('/states/', methods=['GET'])
 def get_states():
     """Return a list of all states"""
