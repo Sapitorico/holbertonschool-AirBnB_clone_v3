@@ -6,45 +6,40 @@ from models.state import State
 from models import storage
 from flask import jsonify, make_response, request
 
-@app_views.route('/states/<state_id>/cities', methods=['GET'])
-def  get_cities(state_id):
+
+@app_views.route('/states/<state_id>/cities', methods=['GET'],
+                 strict_slashes=False)
+def get_cities(state_id):
     """return a list of cities"""
     state = storage.get(State, state_id)
     if state is None:
-        return jsonify({'error': 'Not found'}), 404
+        return make_response(jsonify({'error': 'Not found'}), 404)
     cities = [city.to_dict() for city in state.cities]
     return jsonify(cities)
 
-# @app_views.route('/cities', methods=['GET'])
-# def get_states2():
-#     """Return a list of all states"""
-#     states = storage.all(City).values()
-#     state_list = [state.to_dict() for state in states]
-#     return jsonify(state_list)
 
-
-@app_views.route('/cities/<city_id>', methods=['GET'])
-def get_cities_by_city_id(city_id):
+@app_views.route('/cities/<city_id>', methods=['GET'], strict_slashes=False)
+def get_city_by_id(city_id):
     """return a city object"""
     city = storage.get(City, city_id)
     if city is None:
-        return jsonify({'error': 'Not found'}), 404
+        return make_response(jsonify({'error': 'Not found'}), 404)
     return jsonify(city.to_dict())
 
 
-@app_views.route('/cities/<city_id>', methods=['DELETE'])
+@app_views.route('/cities/<city_id>', methods=['DELETE'], strict_slashes=False)
 def delete_city(city_id):
     """Delete a city by ID"""
     city = storage.get(City, city_id)
     if city is None:
         return make_response(jsonify({'error': 'not found'}), 404)
     storage.delete(city)
-    storage.reload()
     storage.save()
     return make_response(jsonify({}), 200)
 
 
-@app_views.route('/states/<state_id>/cities', methods=['POST'])
+@app_views.route('/states/<state_id>/cities', methods=['POST'],
+                 strict_slashes=False)
 def create_city(state_id):
     """Create a new city"""
     state = storage.get(State, state_id)
@@ -62,7 +57,7 @@ def create_city(state_id):
     return make_response(jsonify(new_city.to_dict()), 201)
 
 
-@app_views.route('/cities/<city_id>', methods=['PUT'])
+@app_views.route('/cities/<city_id>', methods=['PUT'], strict_slashes=False)
 def update_city(city_id):
     """update a city"""
     city = storage.get(City, city_id)
