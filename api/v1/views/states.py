@@ -6,16 +6,6 @@ from models import storage
 from flask import jsonify, make_response, request
 
 
-# @app_views.route("/states", strict_slashes=False)
-# def get_all_states():
-#     """Return a list of all states."""
-#     states_list = [state.to_dict()
-#                    for state in storage.all(classes.get("State", 0)).values()]
-#     if states_list is not None:
-#         return jsonify(states_list)
-#     else:
-#         return jsonify([])
-
 @app_views.route('/states', methods=['GET'])
 @app_views.route('/states/', methods=['GET'])
 def get_states():
