@@ -20,7 +20,7 @@ def get_state(state_id):
     """Return a state by ID"""
     state = storage.get(State, state_id)
     if state is None:
-        return jsonify({'error': 'Not found'}), 404
+        return make_response(jsonify({'error': 'Not found'}), 404)
     return jsonify(state.to_dict())
 
 
