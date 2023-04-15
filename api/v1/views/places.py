@@ -11,7 +11,7 @@ from flask import jsonify, make_response, request
 @app_views.route('/cities/<city_id>/places', methods=['GET'],
                  strict_slashes=False)
 def get_place(city_id):
-    """return a list of city place"""
+    """Return a list of all places for a given city"""
     city = storage.get(City, city_id)
     if city is None:
         return make_response(jsonify({'error': 'Not found'}), 404)
@@ -66,7 +66,7 @@ def create_place(city_id):
 
 
 @app_views.route('/places/<place_id>', methods=['PUT'], strict_slashes=False)
-def update_city(place_id):
+def update_place(place_id):
     """update a place in the database"""
     place = storage.get(Place, place_id)
     if place is None:
