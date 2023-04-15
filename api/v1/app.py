@@ -2,7 +2,6 @@
 """application"""
 from flask import Flask, make_response, jsonify
 from models import storage
-from flask_cors import CORS
 from api.v1.views import app_views
 from os import getenv
 
@@ -10,8 +9,6 @@ from os import getenv
 app = Flask(__name__)
 """register blueprint template in my appi"""
 app.register_blueprint(app_views)
-# CORS(app, resources={r"/*": {"origins": "*"}})
-
 
 
 @app.teardown_appcontext
@@ -29,5 +26,5 @@ def not_found(error):
 if __name__ == '__main__':
     """run my app"""
     host = getenv('HBNB_API_HOST', '0.0.0.0')
-    port = int(getenv('HBNB_API_PORT', 500))
+    port = int(getenv('HBNB_API_PORT', 5000))
     app.run(host=host, port=port, threaded=True)
