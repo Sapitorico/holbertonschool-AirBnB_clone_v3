@@ -6,22 +6,22 @@ from models import storage
 from flask import jsonify, make_response, request
 
 
-@app_views.route("/states", strict_slashes=False)
-def get_all_states():
-    """Return a list of all states."""
-    states_list = [state.to_dict()
-                   for state in storage.all(classes.get("State", 0)).values()]
-    if states_list is not None:
-        return jsonify(states_list)
-    else:
-        return jsonify([])
+# @app_views.route("/states", strict_slashes=False)
+# def get_all_states():
+#     """Return a list of all states."""
+#     states_list = [state.to_dict()
+#                    for state in storage.all(classes.get("State", 0)).values()]
+#     if states_list is not None:
+#         return jsonify(states_list)
+#     else:
+#         return jsonify([])
 
-# @app_views.route('/states/', methods=['GET'])
-# def get_states():
-#     """Return a list of all states"""
-#     states = storage.all(State).values()
-#     state_list = [state.to_dict() for state in states]
-#     return jsonify(state_list)
+@app_views.route('/states/', methods=['GET'])
+def get_states():
+    """Return a list of all states"""
+    states = storage.all(State).values()
+    state_list = [state.to_dict() for state in states]
+    return jsonify(state_list)
 
 
 @app_views.route('/states/<state_id>', methods=['GET'])
@@ -33,8 +33,7 @@ def get_state(state_id):
     return jsonify(state.to_dict())
 
 
-@app_views.route('/states/<state_id>', methods=['DELETE'],
-                 strict_slashes=False)
+@app_views.route('/states/<state_id>', methods=['DELETE'])
 def delete_state(state_id):
     """Delete a state by ID"""
     state = storage.get(State, state_id)
