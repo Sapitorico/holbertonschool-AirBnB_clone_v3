@@ -3,6 +3,7 @@
 from api.v1.views import app_views
 from models.place import Place
 from models.review import Review
+from models.user import User
 from models import storage
 from flask import jsonify, make_response, request
 
