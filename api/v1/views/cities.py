@@ -1,4 +1,5 @@
 #!/usr/bin/python3
+"""http methods for manipulating sate class resources"""
 from api.v1.views import app_views
 from models.city import City
 from models.state import State
