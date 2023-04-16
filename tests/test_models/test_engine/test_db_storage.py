@@ -59,7 +59,9 @@ test_db_storage.py'])
         self.assertTrue(len(DBStorage.__doc__) >= 1,
                         "DBStorage class needs a docstring")
 
+
 class TestFileStorage(unittest.TestCase):
+
     """Test the FileStorage class"""
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_all_returns_dict(self):
